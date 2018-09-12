@@ -1,0 +1,23 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Save our destination host
+      set_fact: dest_host="{{ ansible_host }}"
+    - name: Get user from local ssh config
+      local_action: shell ssh -G {{ dest_host }} | awk '/^user /{ print $2 }'
+      changed_when: false
+      register: ssh_user
+
+    - name: Print forced ansible_user if defined or username from ssh config otherwize
+      debug: msg="Ansible will connect with {{ ansible_user | default(ssh_user.stdout) }}"
+- hosts: all
+  gather_facts: yes
+  tasks:
+  - name: Print our remote name
+    debug: msg="Ansible connected with {{ ansible_user_id }}"
+  - name: Set authorized key taken from keybase
+    authorized_key:
+      user: "{{ ansible_user | default(ssh_user.stdout) }}"
+      state: present
+      key: "{{ lookup('file', '/keybase/public/pveronneau/id_rsa.pub') }}"
