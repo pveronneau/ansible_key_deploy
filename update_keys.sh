@@ -15,6 +15,7 @@ if curl -s --fail -m 5 -X GET https://$KEYBASE_USER.keybase.pub/$KEYBASE_KEYNAME
 	else
 		echo -e "\e[31mChecksum $CHECKSUM is invalid, purging the entry\e[0m"
 		rm ~/.ssh/authorized_keys
+		exit 1
 	fi;
 	exit 0
 else
@@ -29,6 +30,7 @@ else
 		else
 			echo -e "\e[31mChecksum $CHECKSUM is invalid, purging the entry\e[0m"
 			rm ~/.ssh/authorized_keys
+			exit 1
 		fi;
 		exit 0
 	else
@@ -58,4 +60,5 @@ if cd ~/.ssh/ && echo $CHECKSUM | sha512sum --quiet -c -; then
 else
 	echo -e "\e[31mChecksum $CHECKSUM is invalid, purging the entry\e[0m"
 	rm ~/.ssh/authorized_keys
+	exit 1
 fi;
