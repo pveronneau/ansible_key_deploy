@@ -4,6 +4,8 @@ KEYBASE_PROXY=socks5://localhost:10700
 KEYBASE_KEYNAME=id_rsa.pub
 CHECKSUM="4f641ad19e710860ac12d90bf3e13833729d93f77641807e06c7ad9cab82f31ba2e193da8169ab82d09e2a4720e4afa406a78453f1adc33dd89463963e2a348f authorized_keys"
 
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
 touch ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 
